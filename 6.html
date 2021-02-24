@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document-6</title>
+</head>
+
+<body>
+    <script>
+	//6
+        'use strict';
+		var a, b, c, operation;
+		
+		function mathOperation(a, b, operation) {
+			switch (operation) {
+				case 'сложение' : return getAddition (a, b);
+				case 'вычитание' : return getSubtraction (a, b);
+				case 'умножение' : return getMultiplication (a, b);
+				case 'деление' : return getDivision (a, b);
+				default: console.log('Неверная операция');
+			}
+		}
+		
+		console.log(mathOperation(3, 3, 'сложение'));
+		console.log(mathOperation(3, 2, 'вычитание'));
+		console.log(mathOperation(3, 3, 'умножение'));
+		console.log(mathOperation(6, 3, 'деление'));
+		
+		
+		//сложение
+		function getAddition (a, b) {
+			c = a + b;
+			return c;
+		}
+		
+		
+		//вычитание
+		function getSubtraction (a, b) {
+			c = a - b;
+			return c;
+		}
+		
+		//умножение
+		function getMultiplication (a, b) {
+			c = a * b;
+			return c;
+		}
+		
+		//деление
+		function getDivision (a, b) {
+			c = a / b;
+			return c;
+		}
+		
+    </script>
+</body>
+
+</html>
