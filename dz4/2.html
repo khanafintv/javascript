@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2</title>
+</head>
+
+<body>
+    <script>
+    'use strict';
+	const cart = [
+		{name: 'good1', price: 100, qnt: 2}, 
+		{name: 'good2', price: 200, qnt: 3}, 
+		{name: 'good3', price: 300, qnt: 3}, 
+		{name: 'good4', price: 400, qnt: 3}, 
+		{name: 'good5', price: 500, qnt: 2}, 
+	
+	];
+	
+	function countCart() {
+		let sumCart = 0;
+		cart.forEach((item) => 	{
+			let sum = item.price * item.qnt;
+			console.log(`Общая стоимость товаров ${item.name} - ${sum} р.`)
+			sumCart += sum
+		});
+		
+		return sumCart;
+	}
+	
+	console.log('Стоимость всей корзины: ' + countCart() + ' р.');
+	
+    </script>
+</body>
+
+</html>
