@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>cart</title>
+</head>
+
+<body>
+	<div class="cat"></div>
+	<hr>
+	<div class="basket"></div>
+
+	<script>
+		'use strict';
+		const catalog = {
+			catalogElement: document.querySelector('.cat'),
+
+			goods: [
+				{ id: 1, name: 'Телевизор', price: 100 },
+				{ id: 2, name: 'Ноутбук', price: 200 },
+				{ id: 3, name: 'Телефон', price: 300 },
+				{ id: 4, name: 'Мышь', price: 400 },
+				{ id: 5, name: 'Клава', price: 500 },
+			],
+
+			renderCatalog() {
+				this.goods.forEach(item => {
+					this.catalogElement.insertAdjacentHTML('beforeend', `<p>${item.name} - ${item.price} руб. Введите кол-во: <input type="number" style="width: 50px;" id="${item.id}" value="1"> <button id="${item.id}">в корзину</button></p>`);
+				});
+			},
+		}
+
+		const cart = {
+			cartElem: document.querySelector('.basket'),
+			goods: [],
+
+			createCart() {
+				catalog.catalogElement.addEventListener('click', event => {
+					if (event.target.tagName !== 'BUTTON') return;
+
+					let idBtnAdd = +event.target.id;
+					let findCat = catalog.goods.find(item => item.id === idBtnAdd);
+					let findCart = this.goods.find(item => item.id === idBtnAdd);
+
+					let qnt = +document.getElementById(findCat.id).value;
+					let sumGood = findCat.price * qnt;
+
+					if (qnt !== 0 && qnt > 0 && Number.isInteger(qnt) === true && qnt <= 1000) {
+						if (!findCart) this.goods.push({ id: findCat.id, name: findCat.name, price: findCat.price, sum: sumGood, quantity: qnt });
+						else {
+							findCart.sum += sumGood;
+							findCart.quantity += qnt;
+						}
+					}
+					this.renderCart();
+
+				});
+			},
+
+			renderCart() {
+				let sumCart = this.goods.reduce((sum, current) => sum + current.sum, 0);
+				this.cartElem.textContent = null;
+				this.cartElem.insertAdjacentHTML('afterbegin', `<p>В корзине  <b>${this.goods.length}</b> наим. товара на сумму: <b>${sumCart}</b> руб.</p><br>`);
+
+				this.goods.forEach((item, index) => {
+					this.cartElem.insertAdjacentHTML('beforeend', `<p><b>${item.name}</b> кол-во: <b>${item.quantity}</b> на сумму: <b>${item.sum}</b> руб. <button id="${index}">удалить</button></p>`);
+				});
+
+				this.cartElem.insertAdjacentHTML('beforeend', `<button id="butclear">ОЧИСТИТЬ КОРЗИНУ</button>`);
+				this.clearCart();
+			},
+
+			clearCart() {
+				butclear.addEventListener('click', event => {
+					this.goods.splice(0, this.goods.length);
+					this.cartElem.textContent = 'КОРЗИНА ПУСТА!';
+				});
+			},
+
+			removeProduct() {
+				this.cartElem.addEventListener('click', event => {
+					if (event.target.tagName !== 'BUTTON') return;
+					let ind = event.target.id
+					this.goods.splice(ind, 1);
+					if (this.goods.length == 0) this.cartElem.textContent = 'КОРЗИНА ПУСТА!';
+					else this.renderCart();
+				});
+			},
+		}
+
+		catalog.renderCatalog();
+		cart.createCart();
+		cart.removeProduct();
+		cart.cartElem.insertAdjacentHTML('beforeend', 'КОРЗИНА ПУСТА!');
+
+	</script>
+</body>
+
+</html>
