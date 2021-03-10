@@ -82,6 +82,7 @@
 
 			removeProduct() {
 				this.cartElem.addEventListener('click', event => {
+					if (event.target.tagName !== 'BUTTON') return;
 					let ind = event.target.id
 					this.goods.splice(ind, 1);
 					if (this.goods.length == 0) this.cartElem.textContent = 'КОРЗИНА ПУСТА!';
