@@ -48,16 +48,14 @@
 					let qnt = +document.getElementById(findCat.id).value;
 					let sumGood = findCat.price * qnt;
 
-					if (!findCart && qnt !== 0 && qnt > 0 && Number.isInteger(qnt) === true && qnt <= 1000) {
-						this.goods.push({ id: findCat.id, name: findCat.name, price: findCat.price, sum: sumGood, quantity: qnt });
-						this.renderCart();
+					if (qnt !== 0 && qnt > 0 && Number.isInteger(qnt) === true && qnt <= 1000) {
+						if (!findCart) this.goods.push({ id: findCat.id, name: findCat.name, price: findCat.price, sum: sumGood, quantity: qnt });
+						else {
+							findCart.sum += sumGood;
+							findCart.quantity += qnt;
+						}
 					}
-
-					if (findCart && qnt !== 0 && qnt > 0 && Number.isInteger(qnt) === true && qnt <= 1000) {
-						findCart.sum += sumGood;
-						findCart.quantity += qnt;
-						this.renderCart();
-					}
+					this.renderCart();
 				});
 			},
 
