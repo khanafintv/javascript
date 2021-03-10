@@ -56,6 +56,7 @@
 						}
 					}
 					this.renderCart();
+
 				});
 			},
 
@@ -63,8 +64,9 @@
 				let sumCart = this.goods.reduce((sum, current) => sum + current.sum, 0);
 				this.cartElem.textContent = null;
 				this.cartElem.insertAdjacentHTML('afterbegin', `<p>В корзине  <b>${this.goods.length}</b> наим. товара на сумму: <b>${sumCart}</b> руб.</p><br>`);
-				this.goods.forEach(item => {
-					this.cartElem.insertAdjacentHTML('beforeend', `<p><b>${item.name}</b> кол-во: <b>${item.quantity}</b> на сумму: <b>${item.sum}</b> руб. </p>`);
+
+				this.goods.forEach((item, index) => {
+					this.cartElem.insertAdjacentHTML('beforeend', `<p><b>${item.name}</b> кол-во: <b>${item.quantity}</b> на сумму: <b>${item.sum}</b> руб. <button id="${index}">удалить</button></p>`);
 				});
 
 				this.cartElem.insertAdjacentHTML('beforeend', `<button id="butclear">ОЧИСТИТЬ КОРЗИНУ</button>`);
@@ -78,11 +80,20 @@
 				});
 			},
 
+			removeProduct() {
+				this.cartElem.addEventListener('click', event => {
+					let ind = event.target.id
+					this.goods.splice(ind, 1);
+					if (this.goods.length == 0) this.cartElem.textContent = 'КОРЗИНА ПУСТА!';
+					else this.renderCart();
+				});
+			},
 		}
 
 		catalog.renderCatalog();
 		cart.createCart();
-		if (cart.goods.length == 0) cart.cartElem.insertAdjacentHTML('beforeend', 'КОРЗИНА ПУСТА!');
+		cart.removeProduct();
+		cart.cartElem.insertAdjacentHTML('beforeend', 'КОРЗИНА ПУСТА!');
 
 	</script>
 </body>
